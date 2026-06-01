@@ -43,17 +43,14 @@ This enables broader visibility across SIEM and log-based detection environments
 
 ## Repository Structure
 
-```text
-rules/
-├── malware/
-├── persistence/
-├── credential_access/
-├── lateral_movement/
-├── ransomware/
-└── generic/
-```
+Repository rules are organized using the following hierarchy:
 
----
+```text
+Malware Category
+    └── Malware Type
+            └── Malware Family
+                    └── Detection Rule
+```
 
 ## Disclaimer
 

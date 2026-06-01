@@ -1,6 +1,6 @@
 # Aradbase-Sigma
 
-Aradbase-Sigma is a research focused repository containing behavior-based Sigma rules developed from Aradbase-YARA malware detection research.
+Aradbase-Sigma is a repository containing behavior-based Sigma rules developed from Aradbase-YARA malware detection research.
 
 ---
 

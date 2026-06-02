@@ -1,0 +1,37 @@
+title: Lumma Stealer Execution - wmisvc Masquerading
+id: 9b2c3b8e-5678-406a-9f5b-1d7e2f5b8a9c
+status: stable
+description: Detects the execution of Lumma Stealer payload masquerading as the Windows Management Service (wmisvc.exe) outside of legitimate System32 directories.
+author: bay-ar4fah
+date: 2026/06/02
+tags:
+    - attack.execution
+    - attack.defense_evasion
+    - attack.t1036.005
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection_hashes:
+        Hashes|contains:
+            - 'SHA256=5726b610b8df672e55f1368d32327b9c93fbe4734c3ded8307a4b4d3b927b9b1'
+            - 'MD5=0ad99d6ee05634ef71fa11020accffe6'
+            - 'IMPHASH=23612bb4e22cb0d3ce43e1f4bcba3008'
+
+    selection_names:
+        Image|endswith:
+            - '\wmisvc.exe'
+            - '\root1.exe'
+            - '\sample_00049.exe'
+            - '\bv4zjn.exe'
+
+    filter_legit_windows:
+        Image|startswith:
+            - 'C:\Windows\System32\'
+            - 'C:\Windows\SysWOW64\'
+            - 'C:\Windows\WinSxS\'
+
+    condition: selection_hashes or (selection_names and not filter_legit_windows)
+falsepositives:
+    - Eksekusi wmisvc.exe di luar C:\Windows\ sangat mencurigakan dan kemungkinan besar adalah malware.
+level: critical

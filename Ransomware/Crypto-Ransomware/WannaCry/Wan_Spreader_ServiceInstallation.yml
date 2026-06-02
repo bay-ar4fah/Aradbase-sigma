@@ -1,0 +1,20 @@
+title: WannaCry Ransomware Spreader Service Creation
+id: a1b2c3d4-3333-406a-9f5b-1d7e2f5b8a9c
+status: stable
+description: Detects the creation of the mssecsvc2.0 service used by WannaCry to spread via SMB.
+author: bay-ar4fah
+date: 2026/06/02
+tags:
+    - attack.persistence
+    - attack.t1543.003
+logsource:
+    product: windows
+    service: system
+detection:
+    selection_service_event:
+        EventID: 7045
+        ServiceName: 'mssecsvc2.0'
+    condition: selection_service_event
+falsepositives:
+    - Tidak ada false positive yang diketahui untuk nama layanan ini.
+level: critical

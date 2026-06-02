@@ -1,0 +1,35 @@
+title: Emotet (Heodo) Execution - Arma 3 Masquerade
+id: 5a2c3b8e-1234-406a-9f5b-1d7e2f5b8a9c
+status: stable
+description: Detects the execution of Emotet payload masquerading as Bohemia Interactive's Arma 3 game based on hashes and known campaign filenames.
+author: bay-ar4fah
+date: 2026/06/02
+tags:
+    - attack.execution
+    - attack.defense_evasion
+    - attack.t1036.005
+logsource:
+    category: process_creation
+    product: windows
+detection:
+  
+    selection_hashes:
+        Hashes|contains:
+            - 'SHA256=66406a9f58f42fb6f7d1e31e3aee159641ca5e257521dc325e49ccaec4aeba22'
+            - 'MD5=c75a9677106fefafb8e8a57b5ef338cd'
+            - 'IMPHASH=1N39KVvVK8itaGr7odbrTKnBdbwt4n7PoY'
+
+    selection_suspicious_names:
+        Image|endswith:
+            - '\Arma SE7.exe'
+            - '\armase7.exe'
+            - '\66406a9f58f42fb6_Heodo.exe'
+
+    filter_legit_arma:
+        Image|contains:
+            - '\Steam\steamapps\common\Arma 3\'
+
+    condition: selection_hashes or (selection_suspicious_names and not filter_legit_arma)
+falsepositives:
+    - Sangat jarang. (Pemain Arma 3 mengeksekusi file dari folder instalasi Steam yang legit, bukan dari folder Downloads/Temp dengan nama 'Arma SE7').
+level: high

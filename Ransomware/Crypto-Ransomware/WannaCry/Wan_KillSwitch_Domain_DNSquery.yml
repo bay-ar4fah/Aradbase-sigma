@@ -12,7 +12,7 @@ logsource:
     product: windows
 detection:
     selection_killswitch:
-        Query: 'iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com'
+        QueryName: 'iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com'
     condition: selection_killswitch
 falsepositives:
     - Pemeriksaan keamanan oleh analis internal (Ping/Nslookup manual).

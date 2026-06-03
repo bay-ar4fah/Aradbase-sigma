@@ -1,0 +1,34 @@
+title: Behavior Dropper - zgRAT/Heracles Loader Execution via Rundll32
+id: 11111111-2222-406a-9f5b-1d7e2f5b8a9c
+status: stable
+description: Detects Dropper behavior where rundll32.exe is used to execute suspicious DLLs using ordinal ,#1 from user directories.
+author: bay-ar4fah
+date: 2026/06/03
+tags:
+    - attack.execution
+    - attack.t1218.011
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection_rundll32:
+        Image|endswith: '\rundll32.exe'
+    selection_suspicious_dlls:
+        CommandLine|contains:
+            - '2.4.dll'
+            - 'oui.dll'
+            - 'RunPE.dll'
+            - 'attachment.dll'
+            - 'init.dll'
+            - 'pinchs2.dll'
+    selection_ordinal:
+        CommandLine|contains: ',#1'
+    selection_paths:
+        CommandLine|contains:
+            - '\Desktop\'
+            - '\AppData\Local\Temp\'
+
+    condition: selection_rundll32 and (selection_suspicious_dlls or (selection_ordinal and selection_paths))
+falsepositives:
+    - Sangat jarang terjadi di environtment normal.
+level: high

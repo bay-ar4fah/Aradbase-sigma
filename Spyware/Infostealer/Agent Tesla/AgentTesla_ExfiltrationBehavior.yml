@@ -1,0 +1,21 @@
+title: Behavior Infostealer - Agent Tesla Data Exfiltration to FTP
+id: 55555555-6666-406a-9f5b-1d7e2f5b8a9c
+status: stable
+description: Detects Infostealer behavior specifically related to Agent Tesla performing DNS queries to an external compromised FTP server for data exfiltration.
+author: bay-ar4fah
+date: 2026/06/03
+tags:
+    - attack.exfiltration
+    - attack.t1048.003
+    - attack.command_and_control
+logsource:
+    category: dns_query
+    product: windows
+detection:
+    selection_c2:
+        QueryName: 'ftp.antoniomayol.com'
+    
+    condition: selection_c2
+falsepositives:
+    - Koneksi FTP legit oleh admin ke domain terkait (harus diverifikasi).
+level: high
